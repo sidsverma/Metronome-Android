@@ -121,24 +121,24 @@ public class MetronomeService extends Service implements Runnable {
         Intent intent = new Intent(this, MetronomeService.class);
         intent.setAction(ACTION_PAUSE);
 
-        NotificationCompat.Builder builder;
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE))
-                    .createNotificationChannel(new NotificationChannel("metronome", getString(R.string.app_name), NotificationManager.IMPORTANCE_DEFAULT));
-
-            builder = new NotificationCompat.Builder(this, "metronome");
-        } else
-            builder = new NotificationCompat.Builder(this);
-
-        startForeground(530,
-                builder.setContentTitle(getString(R.string.notification_title))
-                        .setContentText(getString(R.string.notification_desc))
-                        .setSmallIcon(R.drawable.ic_notification)
-                        .setContentIntent(PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_ONE_SHOT))
-                        .setPriority(NotificationCompat.PRIORITY_LOW)
-                        .build()
-        );
+//        NotificationCompat.Builder builder;
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE))
+//                    .createNotificationChannel(new NotificationChannel("metronome", getString(R.string.app_name), NotificationManager.IMPORTANCE_DEFAULT));
+//
+//            builder = new NotificationCompat.Builder(this, "metronome");
+//        } else
+//            builder = new NotificationCompat.Builder(this);
+//
+//        startForeground(530,
+//                builder.setContentTitle(getString(R.string.notification_title))
+//                        .setContentText(getString(R.string.notification_desc))
+//                        .setSmallIcon(R.drawable.ic_notification)
+//                        .setContentIntent(PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_ONE_SHOT))
+//                        .setPriority(NotificationCompat.PRIORITY_LOW)
+//                        .build()
+//        );
 
         if (listener != null)
             listener.onStartTicks();
@@ -148,6 +148,7 @@ public class MetronomeService extends Service implements Runnable {
         handler.removeCallbacks(this);
         stopForeground(true);
         isPlaying = false;
+        setTick(0);
 
         if (listener != null)
             listener.onStopTicks();
@@ -225,6 +226,10 @@ public class MetronomeService extends Service implements Runnable {
         super.onDestroy();
     }
 
+    public void teen_taal() {
+
+    }
+
     @Override
     public void run() {
         if (isPlaying) {
@@ -244,7 +249,7 @@ public class MetronomeService extends Service implements Runnable {
             else if (Build.VERSION.SDK_INT >= 26)
                 vibrator.vibrate(VibrationEffect.createOneShot(isEmphasis ? 50 : 20, VibrationEffect.DEFAULT_AMPLITUDE));
             else vibrator.vibrate(isEmphasis ? 50 : 20);
-            if(getTick() >= 3)
+            if(getTick() >= TicksView.ticks.length-2)
                 setTick(0);
             else
                 setTick(getTick()+1);
