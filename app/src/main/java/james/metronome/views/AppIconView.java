@@ -10,8 +10,8 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.media.ThumbnailUtils;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -19,8 +19,8 @@ import android.view.animation.OvershootInterpolator;
 
 import com.afollestad.aesthetic.Aesthetic;
 
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
+    import io.reactivex.disposables.Disposable;
+    import io.reactivex.functions.Consumer;
 import james.metronome.R;
 import james.metronome.utils.ColorUtils;
 import james.metronome.utils.ImageUtils;

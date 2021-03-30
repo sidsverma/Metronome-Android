@@ -17,13 +17,13 @@ import android.os.IBinder;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 import james.metronome.R;
 import james.metronome.views.TicksView;
 
@@ -65,12 +65,12 @@ public class MetronomeService extends Service implements Runnable {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             soundPool = new SoundPool.Builder()
-                    .setMaxStreams(1)
+                    .setMaxStreams(4)
                     .setAudioAttributes(new AudioAttributes.Builder()
                             .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                             .build())
                     .build();
-        } else soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+        } else soundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
 
         int tick = prefs.getInt(PREF_TICK, 0);
         if (!TicksView.ticks[tick].isVibration())
@@ -230,6 +230,8 @@ public class MetronomeService extends Service implements Runnable {
         if (isPlaying) {
             handler.postDelayed(this, interval);
 
+//            soundId = TicksView.ticks[getTick()].getSoundId(this, soundPool);
+
             if (emphasisIndex >= emphasisList.size())
                 emphasisIndex = 0;
             boolean isEmphasis = emphasisList.get(emphasisIndex);
@@ -242,6 +244,10 @@ public class MetronomeService extends Service implements Runnable {
             else if (Build.VERSION.SDK_INT >= 26)
                 vibrator.vibrate(VibrationEffect.createOneShot(isEmphasis ? 50 : 20, VibrationEffect.DEFAULT_AMPLITUDE));
             else vibrator.vibrate(isEmphasis ? 50 : 20);
+            if(getTick() >= 3)
+                setTick(0);
+            else
+                setTick(getTick()+1);
         }
     }
 

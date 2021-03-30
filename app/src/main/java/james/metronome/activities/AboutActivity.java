@@ -7,18 +7,18 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.afollestad.aesthetic.Aesthetic;
 import com.afollestad.aesthetic.AestheticActivity;
 
-import io.reactivex.annotations.NonNull;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import james.metronome.Metronome;
@@ -26,7 +26,8 @@ import james.metronome.R;
 import james.metronome.views.AppIconView;
 import james.metronome.views.ThemesView;
 
-public class AboutActivity extends AestheticActivity implements ThemesView.OnThemeChangedListener {
+public class AboutActivity extends AestheticActivity implements ThemesView.OnThemeChangedListener
+{
 
     private static final String PREF_THEME = "theme";
 
@@ -44,7 +45,8 @@ public class AboutActivity extends AestheticActivity implements ThemesView.OnThe
     private Metronome metronome;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
         metronome = (Metronome) getApplicationContext();
@@ -73,51 +75,65 @@ public class AboutActivity extends AestheticActivity implements ThemesView.OnThe
         themesView.setTheme(prefs.getInt(PREF_THEME, 0));
         themesView.setListener(this);
 
-        donateView.setOnClickListener(new View.OnClickListener() {
+        donateView.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=james.donate")));
             }
         });
 
-        githubView.setOnClickListener(new View.OnClickListener() {
+        githubView.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://jfenn.me/redirects/?t=github&d=Metronome-Android")));
             }
         });
 
-        playView.setOnClickListener(new View.OnClickListener() {
+        playView.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=james.metronome")));
             }
         });
 
-        tewtwenteyonepxView.setOnClickListener(new View.OnClickListener() {
+        tewtwenteyonepxView.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.221pixels.com/")));
             }
         });
 
-        aesthetic.setOnClickListener(new View.OnClickListener() {
+        aesthetic.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/afollestad/aesthetic")));
             }
         });
 
-        dialogs.setOnClickListener(new View.OnClickListener() {
+        dialogs.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/afollestad/material-dialogs")));
             }
         });
 
-        glide.setOnClickListener(new View.OnClickListener() {
+        glide.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/bumptech/glide")));
             }
         });
@@ -125,18 +141,23 @@ public class AboutActivity extends AestheticActivity implements ThemesView.OnThe
         subscribe();
     }
 
-    private void subscribe() {
-        if (themesView != null && appIcon != null) {
+    private void subscribe()
+    {
+        if (themesView != null && appIcon != null)
+        {
             themesView.subscribe();
             appIcon.subscribe();
         }
 
         textColorPrimarySubscription = Aesthetic.get()
                 .textColorPrimary()
-                .subscribe(new Consumer<Integer>() {
+                .subscribe(new Consumer<Integer>()
+                {
                     @Override
-                    public void accept(@NonNull Integer integer) throws Exception {
-                        if (toolbar != null && iconView != null && buttonsView != null && librariesView != null) {
+                    public void accept(@NonNull Integer integer) throws Exception
+                    {
+                        if (toolbar != null && iconView != null && buttonsView != null && librariesView != null)
+                        {
                             toolbar.setTitleTextColor(integer);
                             DrawableCompat.setTint(toolbar.getBackground(), integer);
                             DrawableCompat.setTint(iconView.getBackground(), integer);
@@ -146,7 +167,8 @@ public class AboutActivity extends AestheticActivity implements ThemesView.OnThe
                         }
 
                         ActionBar actionBar = getSupportActionBar();
-                        if (actionBar != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        if (actionBar != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                        {
                             Drawable drawable = ContextCompat.getDrawable(AboutActivity.this, R.drawable.ic_back);
                             DrawableCompat.setTint(drawable, integer);
                             actionBar.setHomeAsUpIndicator(drawable);
@@ -155,8 +177,10 @@ public class AboutActivity extends AestheticActivity implements ThemesView.OnThe
                 });
     }
 
-    private void unsubscribe() {
-        if (themesView != null && appIcon != null) {
+    private void unsubscribe()
+    {
+        if (themesView != null && appIcon != null)
+        {
             themesView.unsubscribe();
             appIcon.unsubscribe();
         }
@@ -165,27 +189,32 @@ public class AboutActivity extends AestheticActivity implements ThemesView.OnThe
     }
 
     @Override
-    protected void onResume() {
+    protected void onResume()
+    {
         super.onResume();
         subscribe();
     }
 
     @Override
-    protected void onPause() {
+    protected void onPause()
+    {
         super.onPause();
         unsubscribe();
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
         super.onActivityResult(requestCode, resultCode, data);
         if (metronome != null && requestCode == Metronome.REQUEST_PURCHASE)
             metronome.onPremiumBought(resultCode, data);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
             case android.R.id.home:
                 finish(); //IT ALL RETURNS TO NOTHING
                 break;
@@ -194,7 +223,8 @@ public class AboutActivity extends AestheticActivity implements ThemesView.OnThe
     }
 
     @Override
-    public void onThemeChanged(int theme) {
+    public void onThemeChanged(int theme)
+    {
         metronome.onPremium(this);
         prefs.edit().putInt(PREF_THEME, theme).apply();
     }

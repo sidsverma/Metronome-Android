@@ -17,7 +17,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AlertDialog;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +34,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.appcompat.app.AlertDialog;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
@@ -47,7 +47,6 @@ import james.metronome.views.AppIconView;
 import james.metronome.views.EmphasisSwitch;
 import james.metronome.views.MetronomeView;
 import james.metronome.views.SeekBar;
-import james.metronome.views.ThemesView;
 import james.metronome.views.TicksView;
 
 public class MainActivity extends AestheticActivity implements TicksView.OnTickChangedListener, ServiceConnection, MetronomeService.TickListener, EmphasisSwitch.OnCheckedChangeListener, SeekBar.OnProgressChangeListener {
@@ -96,8 +95,8 @@ public class MainActivity extends AestheticActivity implements TicksView.OnTickC
         metronome = (Metronome) getApplicationContext();
         metronome.onCreateActivity();
 
-        if (Aesthetic.isFirstTime())
-            ThemesView.themes[0].apply(this);
+//        if (Aesthetic.isFirstTime())
+//            ThemesView.themes[0].apply(this);
 
         appIcon = findViewById(R.id.appIcon);
         metronomeView = findViewById(R.id.metronome);
