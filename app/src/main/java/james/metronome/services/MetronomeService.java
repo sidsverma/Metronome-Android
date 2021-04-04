@@ -17,9 +17,11 @@ import android.os.IBinder;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import androidx.annotation.Nullable;
@@ -55,6 +57,9 @@ public class MetronomeService extends Service implements Runnable {
     private Vibrator vibrator;
 
     private TickListener listener;
+
+    private long previousTime = Calendar.getInstance().getTimeInMillis();
+    private long currentTime;
 
     @Override
     public void onCreate() {
@@ -237,18 +242,24 @@ public class MetronomeService extends Service implements Runnable {
 
 //            soundId = TicksView.ticks[getTick()].getSoundId(this, soundPool);
 
-            if (emphasisIndex >= emphasisList.size())
-                emphasisIndex = 0;
-            boolean isEmphasis = emphasisList.get(emphasisIndex);
-            if (listener != null)
-                listener.onTick(isEmphasis, emphasisIndex);
-            emphasisIndex++;
+//            if (emphasisIndex >= emphasisList.size())
+//                emphasisIndex = 0;
+//            boolean isEmphasis = emphasisList.get(emphasisIndex);
+//            if (listener != null)
+//                listener.onTick(isEmphasis, emphasisIndex);
+//            emphasisIndex++;
+            boolean isEmphasis = false;
 
-            if (soundId != -1)
-                soundPool.play(soundId, 1, 1, 0, 0, isEmphasis ? 1.5f : 1);
-            else if (Build.VERSION.SDK_INT >= 26)
-                vibrator.vibrate(VibrationEffect.createOneShot(isEmphasis ? 50 : 20, VibrationEffect.DEFAULT_AMPLITUDE));
-            else vibrator.vibrate(isEmphasis ? 50 : 20);
+//            if (soundId != -1) {
+                currentTime = Calendar.getInstance().getTimeInMillis();
+                Log.i("timer", "run: " + (currentTime - previousTime));
+                previousTime = currentTime;
+            soundPool.play(soundId, 1, 1, 0, 0, isEmphasis ? 1.5f : 1);
+//            }
+//            else if (Build.VERSION.SDK_INT >= 26)
+//                vibrator.vibrate(VibrationEffect.createOneShot(isEmphasis ? 50 : 20, VibrationEffect.DEFAULT_AMPLITUDE));
+//            else vibrator.vibrate(isEmphasis ? 50 : 20);
+
             if(getTick() >= TicksView.ticks.length-2)
                 setTick(0);
             else

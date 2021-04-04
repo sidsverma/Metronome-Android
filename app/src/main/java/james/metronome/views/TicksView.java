@@ -25,6 +25,8 @@ public class TicksView extends LinearLayout {
     public static final TickData[] ticks = new TickData[]{
             new TickData(R.string.title_dha1, R.raw.dha1),
             new TickData(R.string.title_dhin1, R.raw.dhin1),
+//            new TickData(R.string.title_c_dha_120, R.raw.c_dha_120),
+//            new TickData(R.string.title_c_dhin_120, R.raw.c_dhin_120),
             new TickData(R.string.title_dhin1, R.raw.dhin1),
             new TickData(R.string.title_dha1_2, R.raw.dha1_2),
 //            new TickData(R.string.title_ge1_2, R.raw.ge1_2),
